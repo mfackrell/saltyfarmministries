@@ -322,13 +322,77 @@
       text-decoration: underline;
     }
 
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 26px 16px 32px;
-      font-size: 13px;
-      color: var(--sfm-text-muted);
-    }
+/* FOOTER  */
+.sfm-footer {
+  background:#C2C4C1;
+  padding:60px 8vw 30px;
+  font-family:"Source Sans 3", sans-serif;
+  color:#303031;
+}
+
+.sfm-footer-inner {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:40px;
+  max-width:1300px;
+  margin:0 auto 30px;
+}
+
+.sfm-footer-column h3 {
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  margin-bottom:14px;
+}
+
+.sfm-footer-column p {
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.sfm-footer-column a {
+  color:#303031;
+  text-decoration:underline;
+}
+
+.sfm-footer-form {
+  display:flex;
+  gap:10px;
+  margin-top:8px;
+}
+
+.sfm-footer-form input {
+  padding:10px 14px;
+  border:1px solid #999;
+  border-radius:6px;
+  font-size:14px;
+  width:200px;
+}
+
+.sfm-footer-form button {
+  background:#e4c14a;
+  border:none;
+  border-radius:30px;
+  padding:10px 22px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.sfm-footer-form button:hover {
+  filter:brightness(1.07);
+}
+
+.sfm-footer-bottom {
+  text-align:center;
+  font-size:13px;
+  padding-top:15px;
+  border-top:1px solid rgba(0,0,0,0.15);
+  color:#555;
+}
+
 
     .footer a {
       color: var(--sfm-text-muted);
@@ -399,10 +463,38 @@
     </div>
   </main>
 
-  <footer class="footer">
-    © <span id="year"></span> Salty Farm Ministries ·
-    <a href="https://saltyfarmministries.org">saltyfarmministries.org</a>
-  </footer>
+<footer class="sfm-footer">
+  <div class="sfm-footer-inner">
+    <div class="sfm-footer-column">
+      <h3>CONTACT US</h3>
+      <p>850.732.6647<br>
+      info@saltyfarmministries.org<br>
+      13800 PC Beach Pkwy Suite 106-D #303<br>
+      Panama City Beach, FL 32407</p>
+    </div>
+
+    <div class="sfm-footer-column">
+      <h3>CONNECT WITH US</h3>
+      <p>
+        <a href="https://www.facebook.com/SaltyFarmMinistries">Facebook</a><br>
+        <a href="https://www.instagram.com/salty.farm.ministries/">Instagram</a><br>
+        <a href="https://www.youtube.com/@SaltyFarmMinistries">YouTube</a>
+      </p>
+    </div>
+
+    <div class="sfm-footer-column">
+      <h3>JOIN SALTY FARM FAM</h3>
+      <form action="#" class="sfm-footer-form">
+        <input type="email" placeholder="Email here*" required>
+        <button type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="sfm-footer-bottom">
+    © <span id="year"></span> Salty Farm Ministries
+  </div>
+</footer>
 
   <script>
     const posts = [
@@ -471,7 +563,13 @@
     postsCount.textContent = posts.length === 1 ? "1 story" : `${posts.length} stories`;
 
     document.getElementById("year").textContent = new Date().getFullYear();
+  
   </script>
+  <script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+
 </body>
 </html>
 
