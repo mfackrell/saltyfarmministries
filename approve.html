@@ -2,36 +2,32 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Approving...</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submitting approval...</title>
 </head>
 <body style="font-family: Arial, sans-serif; text-align:center; padding-top:60px;">
-
-<h2>Publishing Blog Post...</h2>
-<p>Please wait a moment.</p>
+  <h2>Approving post...</h2>
+  <p>Hang tight — almost done.</p>
 
 <script>
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
-  // Zapier webhook URL
-  const webhookURL = "https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/";
+  const payload = JSON.stringify({
+    status: "approved",
+    id: id
+  });
 
-  // Build payload
-  const payload = new FormData();
-  payload.append("status", "approved");
-  payload.append("id", id);
+  // Fire webhook (non-blocking)
+  navigator.sendBeacon("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", payload);
 
-  // Send beacon request to Zapier
-  navigator.sendBeacon(webhookURL, payload);
-
-  // Allow time for Beacon to transmit
+  // Redirect immediately – no waiting
   setTimeout(() => {
     window.location.href = "https://blog.saltyfarmministries.org/published";
-  }, 600);
+  }, 50);
 </script>
 
 </body>
 </html>
+
 
 
