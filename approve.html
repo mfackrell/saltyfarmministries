@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Submitting approval...</title>
+</head>
+<body style="font-family:sans-serif; text-align:center; padding-top:60px;">
+  Approving post… hang tight.
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  // payload for Zapier
+  const payload = JSON.stringify({
+    status: "approved",
+    id: id
+  });
+
+  // fire and forget webhook call
+  navigator.sendBeacon("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", payload);
+
+  // redirect immediately
+  window.location.href = "https://blog.saltyfarmministries.org/published";
+</script>
+</body>
+</html>
