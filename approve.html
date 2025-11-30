@@ -1,30 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Submitting approval...</title>
+  <meta http-equiv="refresh" content="0; url='/published'" />
 </head>
-<body style="font-family:sans-serif; text-align:center; padding-top:60px;">
-  Approving post… hang tight.
-
+<body>
 <script>
+  // grab ?id=xxxx from querystring
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
-  // payload for Zapier
-  const payload = JSON.stringify({
-    status: "approved",
-    id: id
-  });
+  // silently call Zapier to approve
+  fetch("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      status: "approved",
+      id: id
+    })
+  }).catch(err => console.warn("Zap background approval failed:", err));
 
-  // fire and forget webhook call
-  navigator.sendBeacon("https://hooks.zapier.com/hooks/catch/19867794/uk51ulv/", payload);
-
-  // redirect immediately
-  window.location.href = "https://blog.saltyfarmministries.org/published";
+  // Redirect user immediately (no waiting)
+  window.location.href = "/published";
 </script>
 </body>
 </html>
-
-
-
