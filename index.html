@@ -588,80 +588,79 @@
   </div>
 </footer>
 
-  <script>
-    const posts = [
-      {
-        slug: "2025-11-29",
-        url: "2025-11-29.html",
-        title: "From Chains to Calling",
-        subtitle: "A Story of Redemption and Purpose",
-        dateLabel: "Nov 29, 2025",
-        tag: "Testimony",
-        excerpt:
-          "A journey from addiction and loss into a renewed identity in Christ, shaped through hip-hop ministry, restoration, and a calling to reach the streets."
-      }
-      // Add future posts here (or append via your automation)
-    ];
+<script>
+    // Fetch the posts.json file from the root directory
+    // We add a timestamp to the URL to prevent browsers from caching the list aggressively
+    fetch('posts.json?v=' + new Date().getTime())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(posts => {
+        // Sort posts by slug (Date) descending (Newest first)
+        posts.sort((a, b) => (a.slug < b.slug ? 1 : -1));
 
-    posts.sort((a, b) => (a.slug < b.slug ? 1 : -1));
+        const postsContainer = document.getElementById("posts-container");
+        const postsCount = document.getElementById("posts-count");
+        const listFragment = document.createDocumentFragment();
 
-    const postsContainer = document.getElementById("posts-container");
-    const postsCount = document.getElementById("posts-count");
+        posts.forEach(post => {
+          const item = document.createElement("article");
+          item.className = "post-item";
 
-    const listFragment = document.createDocumentFragment();
+          const meta = document.createElement("div");
+          meta.className = "post-meta";
+          meta.innerHTML = `${post.dateLabel}<br><span class="post-tag">${post.tag}</span>`;
 
-    posts.forEach(post => {
-      const item = document.createElement("article");
-      item.className = "post-item";
+          const body = document.createElement("div");
+          body.className = "post-body";
 
-      const meta = document.createElement("div");
-      meta.className = "post-meta";
-      meta.innerHTML = `${post.dateLabel}<br><span class="post-tag">${post.tag}</span>`;
+          const titleLink = document.createElement("a");
+          titleLink.href = post.url;
+          titleLink.className = "post-title";
+          titleLink.textContent = post.title;
 
-      const body = document.createElement("div");
-      body.className = "post-body";
+          const subtitle = document.createElement("div");
+          subtitle.style.fontSize = "14px";
+          subtitle.style.color = "#4b5563";
+          subtitle.style.marginBottom = "4px";
+          subtitle.textContent = post.subtitle;
 
-      const titleLink = document.createElement("a");
-      titleLink.href = post.url;
-      titleLink.className = "post-title";
-      titleLink.textContent = post.title;
+          const excerpt = document.createElement("p");
+          excerpt.className = "post-excerpt";
+          excerpt.textContent = post.excerpt;
 
-      const subtitle = document.createElement("div");
-      subtitle.style.fontSize = "14px";
-      subtitle.style.color = "#4b5563";
-      subtitle.style.marginBottom = "4px";
-      subtitle.textContent = post.subtitle;
+          const readLink = document.createElement("a");
+          readLink.href = post.url;
+          readLink.className = "post-link";
+          readLink.innerHTML = "Read story <span>→</span>";
 
-      const excerpt = document.createElement("p");
-      excerpt.className = "post-excerpt";
-      excerpt.textContent = post.excerpt;
+          body.appendChild(titleLink);
+          body.appendChild(subtitle);
+          body.appendChild(excerpt);
+          body.appendChild(readLink);
 
-      const readLink = document.createElement("a");
-      readLink.href = post.url;
-      readLink.className = "post-link";
-      readLink.innerHTML = "Read story <span>→</span>";
+          item.appendChild(meta);
+          item.appendChild(body);
+          listFragment.appendChild(item);
+        });
 
-      body.appendChild(titleLink);
-      body.appendChild(subtitle);
-      body.appendChild(excerpt);
-      body.appendChild(readLink);
-
-      item.appendChild(meta);
-      item.appendChild(body);
-      listFragment.appendChild(item);
-    });
-
-    postsContainer.appendChild(listFragment);
-    postsCount.textContent = posts.length === 1 ? "1 story" : `${posts.length} stories`;
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-  
+        postsContainer.appendChild(listFragment);
+        postsCount.textContent = posts.length === 1 ? "1 story" : `${posts.length} stories`;
+      })
+      .catch(error => {
+        console.error('Error loading posts:', error);
+        document.getElementById("posts-container").innerHTML = "<p>Unable to load stories at this time.</p>";
+      });
   </script>
-  <script>
+
+<script>
+  // 1. Set the Copyright Year
   document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
 
- <script>
+  // 2. Handle Mobile Navigation
   const navToggle = document.getElementById("nav-toggle");
   const navLinks = document.querySelector(".nav-links");
 
@@ -675,9 +674,6 @@
     });
   });
 </script>
-
-
 </body>
 </html>
-
-
+  
